@@ -1,6 +1,40 @@
+;;; org-roam-peek.el --- Peek into nodes with posframe.
+
+;; Copyright (C) 2022 Dominik Keller.
+
+
+;; Author: Dominik Keller
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "26.0")(posframe "1.0.0")(helm "2.0.0")(org "9.4"))
+;; Keywords: org-mode, roam, convenience, posframe
+;; URL: https://www.github.com/domse007/org-roam-peek
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to the
+;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+;; Show a posframe to see inside a node without following it.
+
+;;; Code:
 (require 'posframe)
 (require 'org-roam)
+(require 'org)
 
+;;; Options:
 (defgroup org-roam-peek nil
   "Using posframe to peek into org-roam links."
   :prefix "org-roam-peek")
@@ -37,6 +71,7 @@ alternatives"
   "Border color of the org-roam-peek-buffer."
   :group 'org-roam-peek)
 
+;;; Variables:
 (defvar org-roam-peek--enabled nil
   "Wheter the mode is enabled or not.")
 
@@ -46,14 +81,15 @@ alternatives"
 (defvar org-roam-peek--last-id ""
   "Id of the last visible id.")
 
+;;; Functions:
 (defun org-roam-peek--pst-cmd ()
   "Function that is called to see if the cursor is hovering over a link."
   (let* ((object (org-element-context))
          (type (car object))
          (link-info (car (cdr object))))
     (when (and (eq type 'link) (not org-roam-peek--shown))
-      (let ((link-type (plist-get link-info :type)) 
-            (link-id (plist-get link-info :path))) 
+      (let ((link-type (plist-get link-info :type))
+            (link-id (plist-get link-info :path)))
         (when (string-equal link-type "id")
           (get-buffer-create org-roam-peek-buffer-name)
           (with-current-buffer org-roam-peek-buffer-name
@@ -70,7 +106,7 @@ alternatives"
              (setq org-roam-peek--shown nil)))))
 
 (defun org-roam-peek--show-posframe (buffer)
-  "Show a posframe with the peeked buffer."
+  "Show a posframe with the peeked BUFFER."
   (apply #'posframe-show buffer
          :position (point)
          :poshandler org-roam-peek-posframe-poshandler
@@ -82,6 +118,7 @@ alternatives"
                :height (or org-roam-peek-posframe-height
                            (/ (window-height) 3)))))
 
+;;;###autoload
 (define-minor-mode org-roam-peek-mode
   "Toggle org-roam link peeking."
   :lighter " pk"
@@ -95,3 +132,5 @@ alternatives"
       (add-hook 'post-command-hook 'org-roam-peek--pst-cmd))))
 
 (provide 'org-roam-peek)
+
+;;; org-roam-peek.el ends here.
