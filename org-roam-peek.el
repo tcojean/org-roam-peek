@@ -37,7 +37,8 @@
 ;;; Options:
 (defgroup org-roam-peek nil
   "Using posframe to peek into org-roam links."
-  :prefix "org-roam-peek")
+  :prefix "org-roam-peek"
+  :group 'convenience)
 
 (defcustom org-roam-peek-posframe-poshandler
   #'posframe-poshandler-frame-top-right-corner
@@ -81,7 +82,7 @@ alternatives"
 (defvar org-roam-peek--last-id ""
   "Id of the last visible id.")
 
-(defcustom org-roam-peek--link-types '("id" "roam")
+(defvar org-roam-peek--link-types '("id" "roam")
   "List of types on which org-roam-peek will acto on.")
 
 ;;; Functions:
