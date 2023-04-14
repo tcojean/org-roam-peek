@@ -1,0 +1,36 @@
+#+title: =org-roam-peek=
+#+subtitle: Peek into roam links.
+
+=org-roam-peek= is a minor mode that can be enabled in org buffers. If
+you hover over a link of type =id= or =roam=, a posframe window will
+show the content of that node. When the point moves off the link, the
+preview will be closed.
+
+This package is work in progress and may contain bugs. There could
+also be a hit on performance, because this package must run anytime
+the point is moved.
+
+* Installation
+=org-roam-peek= is currently not available on melpa. It can be installed
+via =quelpa= or any other git based installer.
+
+#+begin_src emacs-lisp
+(use-package org-roam-peek
+  :quelpa (org-roam-peek :fetcher github :repo "domse007/org-roam-peek")
+  :hook
+  ((org-mode . org-roam-peek-mode)))
+#+end_src
+
+* Customization
+The package can be customized through the following variables:
+- =org-roam-peek-posframe-poshandler=: This takes any of the
+  =posframe-poshandler-*= functions which define where the posframe will
+  appear.
+- =org-roam-peek-posframe-border-width=: This number defines the width
+  of border around the posframe.
+- =org-roam-peek-posframe-width=: This variable is either a function or
+  a number. This variable defines the width of the posframe.
+- =org-roam-peek-posframe-height=: The same thing as the previous
+  variable but for the height of the posframe.
+- =org-roam-peek-buffer-name=: The name of the buffer used in the posframe.
+- =org-roam-peek-posframe-border=: Face of posframe border.
