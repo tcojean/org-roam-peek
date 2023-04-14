@@ -103,7 +103,7 @@ that is the case, show the preview."
 	      (delete-region (point-min) (point-max))
 	      (insert-file-contents (car (org-roam-id-find link-id nil)))
 	      (let ((inhibit-message t))(org-mode))) ; supress minibuffer output
-	    (org-roam-peek--show-posframe (buffer-name)))
+	    (org-roam-peek--show-posframe org-roam-peek-buffer-name))
 	  (setq org-roam-peek--shown t
 		org-roam-peek--last-id link-id))))
     (when (and (not (eq type 'link)) org-roam-peek--shown)
