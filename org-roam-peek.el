@@ -5,7 +5,7 @@
 
 ;; Author: Dominik Keller
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "26.0")(posframe "1.0.0")(helm "2.0.0")(org "9.4"))
+;; Package-Requires: ((emacs "26.0")(posframe "1.0.0")(org "9.4"))
 ;; Keywords: org-mode, roam, convenience, posframe
 ;; URL: https://www.github.com/domse007/org-roam-peek
 
